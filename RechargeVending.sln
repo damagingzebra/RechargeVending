@@ -3,6 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM Build", "DM Build", "{F065943F-FD23-49B3-A0A7-C7E3584E2D52}"
+	ProjectSection(SolutionItems) = preProject
+		DM Build\BuildRechargeDM.sql = DM Build\BuildRechargeDM.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM Solution Documentation", "DM Solution Documentation", "{3A86A5B6-69BE-446D-A6C8-77FB80B6D37C}"
+	ProjectSection(SolutionItems) = preProject
+		DM Solution Documentation\Recharge Solution Documentation.docx = DM Solution Documentation\Recharge Solution Documentation.docx
+		DM Solution Documentation\Recharge Solution Model.vsdx = DM Solution Documentation\Recharge Solution Model.vsdx
+		DM Solution Documentation\Recharge Solution Workbook.xlsx = DM Solution Documentation\Recharge Solution Workbook.xlsx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
