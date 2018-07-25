@@ -57,30 +57,51 @@ IF EXISTS(
 -- Create tables
 --
 CREATE TABLE DimTime
-	(Time_SK INT NOT NULL CONSTRAINT pk_time_sk PRIMARY KEY,
- 	 Time TIME NOT NULL,
- 	 Hour24 INT NOT NULL,
- 	 Hour INT NOT NULL,
- 	 Minute INT NOT NULL,
- 	 Second INT NOT NULL,
-	 AM_PM	NVARCHAR(2) NOT NULL,
-	 TimeOfDate	NVARCHAR(20) NOT NULL
+	(
+	Time_SK INT IDENTITY(1,1) NOT NULL CONSTRAINT [pk_dim_time] PRIMARY KEY,
+	Time CHAR(8) NOT NULL,
+	Hour CHAR(2) NOT NULL,
+	MilitaryHour CHAR(2) NOT NULL,
+	Minute CHAR(2) NOT NULL,
+	Second CHAR(2) NOT NULL,
+	AmPm CHAR(2) NOT NULL,
+	StandardTime CHAR(11) NULL
 	);
 --
 CREATE TABLE DimDate
-	(Date_SK INT CONSTRAINT pk_date_sk PRIMARY KEY,
- 	 Date DATE NOT NULL,
- 	 Year INT NOT NULL,
- 	 Quarter INT NOT NULL,
- 	 YearQuarter NVARCHAR(7) NOT NULL,
- 	 Month INT NOT NULL,
- 	 MonthName NVARCHAR(10) NOT NULL,
- 	 WeekOfYear INT NOT NULL,
- 	 DayOfWeek INT NOT NULL,
- 	 DayName INT NOT NULL,
- 	 Weekend INT NOT NULL,
- 	 Holiday INT NOT NULL,
- 	 Season NVARCHAR(10) NOT NULL
+	(
+	Date_SK				INT PRIMARY KEY, 
+	Date				DATE,
+	FullDate			NCHAR(10),-- Date in MM-dd-yyyy format
+	DayOfMonth			INT, -- Field will hold day number of Month
+	DayName				NVARCHAR(9), -- Contains name of the day, Sunday, Monday 
+	DayOfWeek			INT,-- First Day Sunday=1 and Saturday=7
+	DayOfWeekInMonth	INT, -- 1st Monday or 2nd Monday in Month
+	DayOfWeekInYear		INT,
+	DayOfQuarter		INT,
+	DayOfYear			INT,
+	WeekOfMonth			INT,-- Week Number of Month 
+	WeekOfQuarter		INT, -- Week Number of the Quarter
+	WeekOfYear			INT,-- Week Number of the Year
+	Month				INT, -- Number of the Month 1 to 12{}
+	MonthName			NVARCHAR(9),-- January, February etc
+	MonthOfQuarter		INT,-- Month Number belongs to Quarter
+	Quarter				NCHAR(2),
+	QuarterName			NVARCHAR(9),-- First,Second..
+	Year				INT,-- Year value of Date stored in Row
+	YearName			CHAR(7), -- CY 2017,CY 2018
+	MonthYear			CHAR(10), -- Jan-2018,Feb-2018
+	MMYYYY				INT,
+	FirstDayOfMonth		DATE,
+	LastDayOfMonth		DATE,
+	FirstDayOfQuarter	DATE,
+	LastDayOfQuarter	DATE,
+	FirstDayOfYear		DATE,
+	LastDayOfYear		DATE,
+	IsHoliday			BIT,-- Flag 1=National Holiday, 0-No National Holiday
+	IsWeekday			BIT,-- 0=Week End ,1=Week Day
+	Holiday				NVARCHAR(50),--Name of Holiday in US
+	Season				NVARCHAR(10)--Name of Season
 	);
 --
 CREATE TABLE DimProduct

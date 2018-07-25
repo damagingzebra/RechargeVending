@@ -10,10 +10,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM Build", "DM Build", "{F0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM Solution Documentation", "DM Solution Documentation", "{3A86A5B6-69BE-446D-A6C8-77FB80B6D37C}"
 	ProjectSection(SolutionItems) = preProject
+		DM Solution Documentation\Information Packet.xlsx = DM Solution Documentation\Information Packet.xlsx
 		DM Solution Documentation\Recharge Solution Documentation.docx = DM Solution Documentation\Recharge Solution Documentation.docx
 		DM Solution Documentation\Recharge Solution Model.vsdx = DM Solution Documentation\Recharge Solution Model.vsdx
 		DM Solution Documentation\Recharge Solution Workbook.xlsx = DM Solution Documentation\Recharge Solution Workbook.xlsx
-		DM Solution Documentation\RechargeDM_Diagram.png = DM Solution Documentation\RechargeDM_Diagram.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OLTP Build", "OLTP Build", "{5D5A7C1F-FE74-4460-834A-8C3F34F179DA}"
