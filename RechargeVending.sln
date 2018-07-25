@@ -18,7 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM Solution Documentation",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OLTP Build", "OLTP Build", "{5D5A7C1F-FE74-4460-834A-8C3F34F179DA}"
 	ProjectSection(SolutionItems) = preProject
-		OLTP Build\BuildRechargeOLTP.sql = OLTP Build\BuildRechargeOLTP.sql
+		OLTP Build\Load Recharge.sql = OLTP Build\Load Recharge.sql
+		OLTP Build\RechargeHelperData.xlsx = OLTP Build\RechargeHelperData.xlsx
 	EndProjectSection
 EndProject
 Global
