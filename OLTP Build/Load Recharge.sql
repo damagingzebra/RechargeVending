@@ -83,6 +83,8 @@
 -- * Campus ID Is not accounted For In the Dynamic Loads 
 --         (Only one campus so not relevant at this time)
 -- * Consider moving all declares to the very top and then initializing fetch vars where needed
+-- * Add Ability to skew which slots/position is selected for a product OR
+-- * Add Ability for a product to have an affinity for a slot or a machine
 -- -----------------------------------------------------------
 
 -- -----------------------------------------------------------
