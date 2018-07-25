@@ -19,9 +19,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OLTP Build", "OLTP Build", "{5D5A7C1F-FE74-4460-834A-8C3F34F179DA}"
 	ProjectSection(SolutionItems) = preProject
 		OLTP Build\Load Recharge.sql = OLTP Build\Load Recharge.sql
-		OLTP Build\Recharge.bak = OLTP Build\Recharge.bak
-		OLTP Build\Recharge.mdf = OLTP Build\Recharge.mdf
-		OLTP Build\Recharge_log.ldf = OLTP Build\Recharge_log.ldf
 		OLTP Build\RechargeHelperData.xlsx = OLTP Build\RechargeHelperData.xlsx
 	EndProjectSection
 EndProject
@@ -31,6 +28,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM ETL", "DM ETL", "{147F33
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OLTP Backup", "OLTP Backup", "{563FD1BE-280E-4174-B0B6-3D26640B9AD9}"
+	ProjectSection(SolutionItems) = preProject
+		OLTP Backup\Backup Files MDF-LOG.zip = OLTP Backup\Backup Files MDF-LOG.zip
+		OLTP Backup\Recharge.bak = OLTP Backup\Recharge.bak
+	EndProjectSection
 EndProject
 Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "SSIS Recharge", "DM ETL\SSIS Recharge\SSIS Recharge.dtproj", "{219D3636-E4CE-45D8-B8E3-7C148764F976}"
 EndProject
