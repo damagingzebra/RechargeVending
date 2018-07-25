@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM Build", "DM Build", "{F0
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM Solution Documentation", "DM Solution Documentation", "{3A86A5B6-69BE-446D-A6C8-77FB80B6D37C}"
 	ProjectSection(SolutionItems) = preProject
+		ETL Load Verify.sql = ETL Load Verify.sql
 		DM Solution Documentation\Information Packet.xlsx = DM Solution Documentation\Information Packet.xlsx
 		DM Solution Documentation\Recharge Solution Documentation.docx = DM Solution Documentation\Recharge Solution Documentation.docx
 		DM Solution Documentation\Recharge Solution Model.vsdx = DM Solution Documentation\Recharge Solution Model.vsdx
@@ -22,9 +23,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OLTP Build", "OLTP Build", 
 		OLTP Build\RechargeHelperData.xlsx = OLTP Build\RechargeHelperData.xlsx
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DM ETL", "DM ETL", "{147F33D9-7C25-496C-851B-7A6B46D9CE5D}"
+EndProject
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "SSIS Recharge", "SSIS Recharge\SSIS Recharge.dtproj", "{CF95D439-CD7A-4416-AA1C-7402F1D2A2A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OLTP Backup", "OLTP Backup", "{563FD1BE-280E-4174-B0B6-3D26640B9AD9}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF95D439-CD7A-4416-AA1C-7402F1D2A2A7}.Development|Default.ActiveCfg = Development
+		{CF95D439-CD7A-4416-AA1C-7402F1D2A2A7}.Development|Default.Build.0 = Development
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CF95D439-CD7A-4416-AA1C-7402F1D2A2A7} = {147F33D9-7C25-496C-851B-7A6B46D9CE5D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3FC0F51C-F5B0-4FEC-8C73-A67DB8B1AD2F}

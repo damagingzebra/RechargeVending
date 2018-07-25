@@ -113,12 +113,12 @@ PRIMARY KEY CLUSTERED
 CREATE TABLE DimProduct
 	(Product_SK  INT IDENTITY(1,1)  NOT NULL CONSTRAINT pk_product_sk PRIMARY KEY,
  	 Product_AK	 INT NOT NULL,
- 	 ProductType NVARCHAR(30) NOT NULL,
- 	 ProductName NVARCHAR(30) NOT NULL,
- 	 Brand NVARCHAR(30) NOT NULL,
- 	 Manufacturer NVARCHAR(30) NOT NULL,
+ 	 ProductType NVARCHAR(75) NOT NULL,
+ 	 ProductName NVARCHAR(75) NOT NULL,
+ 	 Brand NVARCHAR(75) NOT NULL,
+ 	 Manufacturer NVARCHAR(75) NOT NULL,
  	 Size NVARCHAR(50) NOT NULL
-	);
+);
 --
 CREATE TABLE DimLocation
 	(Location_SK INT IDENTITY(1,1)  NOT NULL CONSTRAINT pk_location_sk PRIMARY KEY,
@@ -126,8 +126,10 @@ CREATE TABLE DimLocation
 	 CampusName NVARCHAR(75) NOT NULL,
 	 DepartmentName NVARCHAR(75) NOT NULL,
 	 BuildingName NVARCHAR(75) NOT NULL,
-	 Floor INT NOT NULL
-	);
+	 Floor INT NOT NULL,
+	 StartDate Datetime ,
+	 EndDate Datetime ,
+);
 --
 CREATE TABLE DimMachine
 	(Machine_SK INT IDENTITY(1,1)  NOT NULL CONSTRAINT pk_machine_sk PRIMARY KEY,
@@ -136,8 +138,8 @@ CREATE TABLE DimMachine
 	 MachineType NVARCHAR(50) NOT NULL,
      CashEnabled INT NOT NULL,
      CreditEnabled INT NOT NULL,	 
-     MobilPayEnabled INT NOT NULL,	 
-	);
+     MobilePayEnabled INT NOT NULL,	 
+);
 --
 CREATE TABLE FactSale
 	(SaleDate INT CONSTRAINT fk_sale_date_sk FOREIGN KEY REFERENCES DimDate(Date_SK),
@@ -145,14 +147,13 @@ CREATE TABLE FactSale
      Machine_SK INT CONSTRAINT fk_machine_sk FOREIGN KEY REFERENCES DimMachine(Machine_SK),
      Location_SK INT CONSTRAINT fk_location_sk FOREIGN KEY REFERENCES DimLocation(Location_SK),
      Product_SK INT CONSTRAINT fk_product_sk FOREIGN KEY REFERENCES DimProduct(Product_SK),
-     Shelf INT NOT NULL,	 
-     Position INT NOT NULL,	 
-	 Tender NVARCHAR(10) NOT NULL,
+     Position_DD INT NOT NULL,	 
+     Slot_DD INT NOT NULL,	 
+     Tender NVARCHAR(75) NOT NULL,
      Price DECIMAL(3,2) NOT NULL,
      Cost DECIMAL(3,2) NOT NULL,
      LastItem INT NOT NULL,
      CONSTRAINT pk_sale PRIMARY KEY  (SaleDate, SaleTime, Machine_SK)        
-
-	);
+);
 --
 GO

@@ -1,6 +1,16 @@
 -- Recharge Vending database developed and written by Brian Corcoran
 -- Originally Written: July 2018
 
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+-- !!                      WARNING                       !! --
+-- !!            DEPENDING ON PARAMETERS SET,            !! --
+-- !!      MACHINE SPEED AND RESULT OUTOUT SETTINGS      !! --
+-- !!	     THIS CAN RUN A LONG TIME OR CRASH ;-)       !! --
+-- !!            READ THE DOCUMENTATION NOTES            !! --
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+
 -- -----------------------------------------------------------
 -- Script Documentation 
 -- ---------------------------------------------------------
@@ -15,17 +25,17 @@
 
 -- Script Sections
 -- * Documentation
--- * Set Dates For Script
+-- * Set Parameters For Script
 -- * Create Database As Needed
 -- * Create DimDate (from Amy Phillips)
 -- * Create DimTime (from Amy Phillips)
 -- * Drop Tables
--- * Create Tables
+-- * Create Recharge Tables
 -- * Load Basic Data Tables
 -- * Dynamic Load of Machine / BuildingMachine
 -- * Dynamic Load of Stock
 -- * Dynamic Load of Sales
--- * Clean Up Helper Tables
+-- * Clean Up Helper Tables (Per Parameter)
 
 -- Expected Counts
 -- -- Due to Dynamic Loading of Machine & BuildingMachine Exact Models Selected Vary 
@@ -47,7 +57,7 @@
 -- * Stock: VARIABLE
 -- * Tender: 7
 
--- Helper Tables Dropped After Load Compete
+-- Helper Tables Dropped After Load Compete (Per Parameter)
 -- -- DimDate
 -- -- DimTime
 -- -- BuildingLoad
@@ -58,32 +68,20 @@
 -- Set Date Ranges For Data Generation
 -- -----------------------------------------------------------
 -- All start dates must be less than corresponding end date 
--- Tried putting DECLAREs up to and MSSQL did not like
--- Dates Are Set Below : Only One GO at the End so they are accessible
-
--- Set The Dates To DimDate : Lines 136 & 137 (Search: StartDate)
--- -- DEFAULT: 2018-01-01 thru 2018-02-01
-
--- Set The Dates To Use For In Service : Line 1409 (Search: ServiceDate)
--- -- DEFAULT: 2010-01-01 thru 2018-01-01 [changing has no real impact]
-
--- Set The Dates To Generate Stock For : Line 1509 (Search: StockDate)
--- -- DEFAULT: 2018-01-01 thru 2018-02-01
-
--- Set The Dates To Generate Sales For : Line 1683 (Search: SaleDate)
--- -- DEFAULT: 2018-01-02 thru 2018-01-12
+-- Dates Are Set Below : Only One GO at the End of load, so they are accessible throughout
 
 -- -----------------------------------------------------------
 -- Additional Tuning Options
 -- ---------------------------------------------------------
--- Additional Spots For Tuning 
 -- Shelf Qty (Search for the shelf Insert)
 -- Limit the number of can machines (Search for max_cans)
+-- Adjust the values/counts in WeightTenders
 
 -- -----------------------------------------------------------
 -- Things To improve
 -- ---------------------------------------------------------
--- * Campus ID Is not accounted For In the Dynamic Loads (Only one campus so not relevant at this time)
+-- * Campus ID Is not accounted For In the Dynamic Loads 
+--         (Only one campus so not relevant at this time)
 -- * Consider moving all declares to the very top and then initializing fetch vars where needed
 -- -----------------------------------------------------------
 
@@ -91,33 +89,36 @@
 -- Create Database AS Need
 -- -----------------------------------------------------------
 IF NOT EXISTS(SELECT * FROM sys.databases
- WHERE name = N'RechargeMed')
- CREATE DATABASE RechargeMed
+ WHERE name = N'Recharge')
+ CREATE DATABASE Recharge
 --
 GO
 --
 
-USE RechargeMed;
+USE Recharge;
 
 -- -----------------------------------------------------------
 -- Set Date Parameters
 -- -----------------------------------------------------------
 
 -- Specify start date and end date here for DimDate
-DECLARE @StartDate DATE = '2017-12-01' 
-DECLARE @EndDate DATE = '2018-04-30' 
+DECLARE @StartDate DATE = '2017-05-01' 
+DECLARE @EndDate DATE = '2018-07-31' 
 
 -- In Service Dates For BulidingMachine (Dates do not matter much)
 DECLARE @ServiceDateStart Date = '2010-01-01';
 DECLARE @ServiceDateEnd Date = '2018-01-01';
 
 -- Dates To Generate Stock For
-DECLARE @StockDateStart	Date = '2017-12-01';
-DECLARE @StockDateEnd	Date = '2018-04-07';
+DECLARE @StockDateStart	Date = '2017-05-01';
+DECLARE @StockDateEnd	Date = '2018-07-13';
 
 -- Set dates to make sales for (inclusive)
-DECLARE @SaleDateStart Date = '2018-01-02';
-DECLARE @SaleDateEnd Date = '2018-03-31';
+DECLARE @SaleDateStart Date = '2017-06-01';
+DECLARE @SaleDateEnd Date = '2018-06-30';
+
+-- Do you want to drop the helper tables
+DECLARE @drop_helpers INT = 1;
 
 -- -----------------------------------------------------------
 -- Loading DimDate Table to Facilitate Dynamic Table Loading
@@ -1889,11 +1890,6 @@ END
 
 CLOSE  sale_day_cursor;
 DEALLOCATE sale_day_cursor;
---
-GO
---
-
-
 -- ------------------------------------------------------------------------------------
 -- End Load Sales
 -- ------------------------------------------------------------------------------------
@@ -1902,11 +1898,19 @@ GO
 -- ------------------------------------------------------------------------------------
 -- Drop Load Helper Tables
 -- ------------------------------------------------------------------------------------
-DROP TABLE IF EXISTS DimDate;
-DROP TABLE IF EXISTS DimTime;
-DROP TABLE IF EXISTS SalesLoad;
-DROP TABLE IF EXISTS SaleTimes;
-DROP TABLE IF EXISTS WeightTenders;
+IF (@drop_helpers = 1) 
+BEGIN
+    DROP TABLE IF EXISTS DimDate;
+    DROP TABLE IF EXISTS DimTime;
+    DROP TABLE IF EXISTS SalesLoad;
+    DROP TABLE IF EXISTS SaleTimes;
+    DROP TABLE IF EXISTS WeightTenders;
+END
+
+--
+GO
+--
+
 
 -- ------------------------------------------------------------------------------------
 -- List table names and row counts for confirmation
