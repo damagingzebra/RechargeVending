@@ -58,51 +58,57 @@ IF EXISTS(
 --
 CREATE TABLE DimTime
 	(
-	Time_SK INT IDENTITY(1,1) NOT NULL CONSTRAINT [pk_dim_time] PRIMARY KEY,
-	Time CHAR(8) NOT NULL,
-	Hour CHAR(2) NOT NULL,
-	MilitaryHour CHAR(2) NOT NULL,
-	Minute CHAR(2) NOT NULL,
-	Second CHAR(2) NOT NULL,
-	AmPm CHAR(2) NOT NULL,
-	StandardTime CHAR(11) NULL
+	Time_SK INT IDENTITY(1,1) NOT NULL CONSTRAINT PK_dim_Time PRIMARY KEY,
+	Time NCHAR(8) NOT NULL,
+	Hour NCHAR(2) NOT NULL,
+	MilitaryHour NCHAR(2) NOT NULL,
+	Minute NCHAR(2) NOT NULL,
+	Second NCHAR(2) NOT NULL,
+	AmPm NCHAR(2) NOT NULL,
+	StandardTime NCHAR(11) NULL
 	);
---
-CREATE TABLE DimDate
-	(
-	Date_SK				INT PRIMARY KEY, 
-	Date				DATE,
-	FullDate			NCHAR(10),-- Date in MM-dd-yyyy format
-	DayOfMonth			INT, -- Field will hold day number of Month
-	DayName				NVARCHAR(9), -- Contains name of the day, Sunday, Monday 
-	DayOfWeek			INT,-- First Day Sunday=1 and Saturday=7
-	DayOfWeekInMonth	INT, -- 1st Monday or 2nd Monday in Month
-	DayOfWeekInYear		INT,
-	DayOfQuarter		INT,
-	DayOfYear			INT,
-	WeekOfMonth			INT,-- Week Number of Month 
-	WeekOfQuarter		INT, -- Week Number of the Quarter
-	WeekOfYear			INT,-- Week Number of the Year
-	Month				INT, -- Number of the Month 1 to 12{}
-	MonthName			NVARCHAR(9),-- January, February etc
-	MonthOfQuarter		INT,-- Month Number belongs to Quarter
-	Quarter				NCHAR(2),
-	QuarterName			NVARCHAR(9),-- First,Second..
-	Year				INT,-- Year value of Date stored in Row
-	YearName			CHAR(7), -- CY 2017,CY 2018
-	MonthYear			CHAR(10), -- Jan-2018,Feb-2018
-	MMYYYY				INT,
-	FirstDayOfMonth		DATE,
-	LastDayOfMonth		DATE,
-	FirstDayOfQuarter	DATE,
-	LastDayOfQuarter	DATE,
-	FirstDayOfYear		DATE,
-	LastDayOfYear		DATE,
-	IsHoliday			BIT,-- Flag 1=National Holiday, 0-No National Holiday
-	IsWeekday			BIT,-- 0=Week End ,1=Week Day
-	Holiday				NVARCHAR(50),--Name of Holiday in US
-	Season				NVARCHAR(10)--Name of Season
-	);
+
+
+-- 
+CREATE TABLE DimDate (
+	Date_SK           INT NOT NULL,
+	DATE              DATE NULL,
+	FullDate          NCHAR(10) NULL,
+	DayOfMonth        INT NULL,
+	DayName           NVARCHAR(9) NULL,
+	DayOfWeek         INT NULL,
+	DayOfWeekInMonth  INT NULL,
+	DayOfWeekInYear   INT NULL,
+	DayOfQuarter      INT NULL,
+	DayOfYear         INT NULL,
+	WeekOfMonth       INT NULL,
+	WeekOfQuarter     INT NULL,
+	WeekOfYear        INT NULL,
+	Month             INT NULL,
+	MonthName         NVARCHAR(9) NULL,
+	MonthOfQuarter    INT NULL,
+	Quarter           NCHAR(2) NULL,
+	QuarterName       NVARCHAR(9) NULL,
+	Year              INT NULL,
+	YearName          CHAR(7) NULL,
+	MonthYear         CHAR(10) NULL,
+	MMYYYY            INT NULL,
+	FirstDayOfMonth   DATE NULL,
+	LastDayOfMonth    DATE NULL,
+	FirstDayOfQuarter DATE NULL,
+	LastDayOfQuarter  DATE NULL,
+	FirstDayOfYear    DATE NULL,
+	LastDayOfYear     DATE NULL,
+	IsHoliday         BIT NULL,
+	IsWeekday         BIT NULL,
+	Holiday           NVARCHAR(50) NULL,
+	Season            NVARCHAR(10) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Date_SK] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
 --
 CREATE TABLE DimProduct
 	(Product_SK  INT IDENTITY(1,1)  NOT NULL CONSTRAINT pk_product_sk PRIMARY KEY,
@@ -111,7 +117,7 @@ CREATE TABLE DimProduct
  	 ProductName NVARCHAR(30) NOT NULL,
  	 Brand NVARCHAR(30) NOT NULL,
  	 Manufacturer NVARCHAR(30) NOT NULL,
- 	 Size DECIMAL(5,2) NOT NULL
+ 	 Size NVARCHAR(50) NOT NULL
 	);
 --
 CREATE TABLE DimLocation
@@ -126,11 +132,11 @@ CREATE TABLE DimLocation
 CREATE TABLE DimMachine
 	(Machine_SK INT IDENTITY(1,1)  NOT NULL CONSTRAINT pk_machine_sk PRIMARY KEY,
 	 Machine_AK INT NOT NULL,
-	 ModelNumber NVARCHAR(10) NOT NULL,
-	 MachineType NVARCHAR(20) NOT NULL,
+	 ModelName NVARCHAR(50) NOT NULL,
+	 MachineType NVARCHAR(50) NOT NULL,
+     CashEnabled INT NOT NULL,
      CreditEnabled INT NOT NULL,	 
      MobilPayEnabled INT NOT NULL,	 
-     CashEnabled INT NOT NULL
 	);
 --
 CREATE TABLE FactSale
@@ -144,21 +150,9 @@ CREATE TABLE FactSale
 	 Tender NVARCHAR(10) NOT NULL,
      Price DECIMAL(3,2) NOT NULL,
      Cost DECIMAL(3,2) NOT NULL,
-     LastItem INT NOT NULL
+     LastItem INT NOT NULL,
+     CONSTRAINT pk_sale PRIMARY KEY  (SaleDate, SaleTime, Machine_SK)        
+
 	);
-
-GO
-
 --
--- List table names and row counts for confirmation
---
-SET NOCOUNT ON
-SELECT 'FactSale' AS "Table", COUNT(*) AS "Rows"	FROM FactSale	 UNION
-SELECT 'DimDate',             COUNT(*)				FROM DimDate     UNION
-SELECT 'DimTime',             COUNT(*)				FROM DimTime     UNION
-SELECT 'DimProduct',          COUNT(*)				FROM DimProduct  UNION
-SELECT 'DimLocation',         COUNT(*)				FROM DimLocation UNION
-SELECT 'DimMachine',          COUNT(*)				FROM DimMachine           
-ORDER BY 1;
-SET NOCOUNT OFF
 GO
